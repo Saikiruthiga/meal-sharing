@@ -8,9 +8,11 @@ const firstMealRouter = express.Router();
 firstMealRouter.get("/", async (request, response) => {
   try {
     const [meal] = await knex.raw("select * from meal order by id limit 1");
-    meal.length > 0
-      ? response.json(meal)
-      : response.status(404).json({ Error: "No records found" });
+    if (meal.length > 0) {
+      response.json(meal[0]);
+    } else {
+      response.status(404).json({ Error: "No records found" });
+    }
   } catch (error) {
     response.status(500).json({ Error: "Server error" });
     console.log("Error on fetching : " + error);

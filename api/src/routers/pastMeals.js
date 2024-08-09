@@ -8,11 +8,11 @@ pastMealsRouter.get("/", async (request, response) => {
     const [meals] = await knex.raw(
       "select * from meal where `when` < '2024-08-06'"
     );
-    meals.length > 0
-      ? response.json(meals)
-      : response
-          .status(404)
-          .json({ Error: "No meals found before the given date" });
+    if (meals.length > 0) {
+      response.json(meals[0]);
+    } else {
+      response.status(404).json({ Error: "No records found" });
+    }
   } catch (error) {
     console.log("Error on fetching: " + error);
     response.status(500).json({ Error: "Server error" });

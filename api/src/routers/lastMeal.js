@@ -9,9 +9,11 @@ lastMealRouter.get("/", async (request, response) => {
     const [meal] = await knex.raw(
       "select * from meal order by id desc limit 1"
     );
-    meal.length > 0
-      ? response.json(meal[0])
-      : response.status(404).json({ Error: "No records found" });
+    if (meal.length > 0) {
+      response.json(meal[0]);
+    } else {
+      response.status(404).json({ Error: "No records found" });
+    }
   } catch (error) {
     console.log("Error on fetching : " + error);
     response.status(500).json({ Error: "Server error" });

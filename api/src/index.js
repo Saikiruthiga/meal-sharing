@@ -14,10 +14,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const router = express.Router();
+const apiRouter = express.Router();
 
 // You can delete this route once you add your own routes
-router.get("/", async (req, res) => {
+apiRouter.get("/", async (req, res) => {
   const SHOW_TABLES_QUERY =
     process.env.DB_CLIENT === "pg"
       ? "SELECT * FROM pg_catalog.pg_tables;"
@@ -28,18 +28,14 @@ router.get("/", async (req, res) => {
 
 // This nested router example can also be replaced with your own sub-router
 //router.use("/nested", nestedRouter);
-router.use("/future-meals", futureMealsRouter);
-router.use("/past-meals", pastMealsRouter);
-router.use("/all-meals", allMealsRouter);
-router.use("/first-meal", firstMealRouter);
-router.use("/last-meal", lastMealRouter);
 
-app.use("/api", router);
-app.use("/future-meals", futureMealsRouter);
-app.use("/past-meals", pastMealsRouter);
-app.use("/all-meals", allMealsRouter);
-app.use("/first-meal", firstMealRouter);
-app.use("/last-meal", lastMealRouter);
+apiRouter.use("/future-meals", futureMealsRouter);
+apiRouter.use("/past-meals", pastMealsRouter);
+apiRouter.use("/all-meals", allMealsRouter);
+apiRouter.use("/first-meal", firstMealRouter);
+apiRouter.use("/last-meal", lastMealRouter);
+
+app.use("/api", apiRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`API listening on port ${process.env.PORT}`);
