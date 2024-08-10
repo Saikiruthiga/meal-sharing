@@ -3,7 +3,12 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import knex from "./database_client.js";
-import nestedRouter from "./routers/nested.js";
+//import nestedRouter from "./routers/nested.js";
+import futureMealsRouter from "./routers/futureMeals.js";
+import pastMealsRouter from "./routers/pastMeals.js";
+import allMealsRouter from "./routers/allMeals.js";
+import firstMealRouter from "./routers/firstMeal.js";
+import lastMealRouter from "./routers/lastMeal.js";
 
 const app = express();
 app.use(cors());
@@ -22,7 +27,13 @@ apiRouter.get("/", async (req, res) => {
 });
 
 // This nested router example can also be replaced with your own sub-router
-apiRouter.use("/nested", nestedRouter);
+//router.use("/nested", nestedRouter);
+
+apiRouter.use("/future-meals", futureMealsRouter);
+apiRouter.use("/past-meals", pastMealsRouter);
+apiRouter.use("/all-meals", allMealsRouter);
+apiRouter.use("/first-meal", firstMealRouter);
+apiRouter.use("/last-meal", lastMealRouter);
 
 app.use("/api", apiRouter);
 
