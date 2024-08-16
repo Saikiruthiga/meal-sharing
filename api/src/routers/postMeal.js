@@ -10,7 +10,7 @@ router.post("/", async (request, response) => {
         .status(404)
         .json({ Error: "Please provide the meal details to create" });
     }
-    const [newMealId] = await knex(`meal`).insert(data);
+    const [newMealId] = await knex("meal").insert(data);
     const newMeal = await knex("meal").where({ id: newMealId }).first();
     response.status(201).json({ newMeal });
   } catch (error) {
