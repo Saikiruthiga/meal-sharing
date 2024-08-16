@@ -5,8 +5,8 @@ const allMealsRouter = express.Router();
 
 allMealsRouter.get("/", async (request, response) => {
   try {
-    const meals = await knex.raw("select * from meal order by id asc");
-    response.json(meals[0]);
+    const meals = await knex("meal").select("*");
+    response.json(meals);
   } catch (error) {
     console.log("Error on fetching : " + error);
     response.status(500).json({ Error: "Server error" });
