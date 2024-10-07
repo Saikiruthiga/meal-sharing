@@ -5,10 +5,10 @@ import knex from "../../database_client.js";
 const app = express();
 app.use(express.json());
 
-const router = express.Router();
-app.use("/api/meals", router);
+const mealByTitleRouter = express.Router();
+app.use("/api/meals", mealByTitleRouter);
 
-router.get("/", async (request, response) => {
+mealByTitleRouter.get("/", async (request, response) => {
   const {
     maxPrice,
     availableReservations,
@@ -117,4 +117,6 @@ router.get("/", async (request, response) => {
   }
 });
 
-app.listen(3000, () => console.log("Server is listening on port 3000...."));
+//app.listen(3000, () => console.log("Server is listening on port 3000...."));
+
+export default mealByTitleRouter;

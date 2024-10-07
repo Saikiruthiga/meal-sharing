@@ -1,9 +1,9 @@
 import express from "express";
 import knex from "../database_client.js";
 
-const router = express.Router();
+const postReservationRouter = express.Router();
 
-router.post("/", async (request, response) => {
+postReservationRouter.post("/", async (request, response) => {
   try {
     const data = request.body;
     if (
@@ -21,6 +21,7 @@ router.post("/", async (request, response) => {
       .select("max_reservations")
       .where({ id: meal_id })
       .first();
+    console.log(meal.max_reservations);
     if (!meal) {
       return response.status(404).json({ Error: "No meal found" });
     }
@@ -28,23 +29,30 @@ router.post("/", async (request, response) => {
       .sum("number_of_guests as total_guests")
       .where({ meal_id: meal_id })
       .first();
+    console.log(currentReservations.total_guests);
 
     const numberOfGuests = currentReservations.total_guests || 0;
-    if (Number(numberOfGuests) + number_of_guests > meal.max_reservations) {
+    if (
+      Number(numberOfGuests) + Number(number_of_guests) >
+      Number(meal.max_reservations)
+    ) {
       const remainingCapacity = meal.max_reservations - numberOfGuests;
       return response.status(404).json({
         Error: `Sorry, The capacity is only for ${remainingCapacity} more people`,
       });
+    } else {
+      const [newId] = await knex("reservation").insert(data);
+      const newReservation = await knex("reservation")
+        .where({ id: newId })
+        .first();
+      response.status(201).json({ newReservation });
     }
-    const [newId] = await knex("reservation").insert(data);
-    const newReservation = await knex("reservation")
-      .where({ id: newId })
-      .first();
-    response.status(201).json({ newReservation });
   } catch (error) {
     console.log(error);
-    response.status(500).json({ Error: "Internal server error" });
+    response
+      .status(500)
+      .json({ Error: error.sqlMessage || "Internal server error" });
   }
 });
 
-export default router;
+export default postReservationRouter;
