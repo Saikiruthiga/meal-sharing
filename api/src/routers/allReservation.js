@@ -1,9 +1,9 @@
 import express from "express";
 import knex from "../database_client.js";
 
-const router = express.Router();
+const allReservationsRouter = express.Router();
 
-router.get("/", async (request, response) => {
+allReservationsRouter.get("/", async (request, response) => {
   try {
     const reservations = await knex("reservation").select();
     if (reservations.length === 0) {
@@ -16,4 +16,4 @@ router.get("/", async (request, response) => {
   }
 });
 
-export default router;
+export default allReservationsRouter;

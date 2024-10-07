@@ -1,21 +1,20 @@
-import "dotenv/config";
 import express from "express";
-
+import futureMealsRouter from "./futureMeals.js";
+import pastMealsRouter from "./pastMeals.js";
 import allMealsRouter from "./allMeals.js";
-import postMealRouter from "./postMeal.js";
-import getMealRouter from "./getMealById.js";
-import updateMealRouter from "./updateMeal.js";
-import deleteMealRouter from "./deleteMeal.js";
+import firstMealRouter from "./firstMeal.js";
+import lastMealRouter from "./lastMeal.js";
+import mealByIdRouter from "./getMealById.js";
+import mealByTitleRouter from "./meals&reviews/queryParams.js";
 
-const app = express();
-app.use(express.json());
+const router = express.Router();
 
-const apiRouter = express.Router();
-app.use(apiRouter);
-apiRouter.use("/api/meals", allMealsRouter);
-apiRouter.use("/api/meals", postMealRouter);
-apiRouter.use("/api/meals", getMealRouter);
-apiRouter.use("/api/meals", updateMealRouter);
-apiRouter.use("/api/meals", deleteMealRouter);
+router.use("/future-meals", futureMealsRouter);
+router.use("/past-meals", pastMealsRouter);
+router.use("/all-meals", allMealsRouter);
+router.use("/first-meal", firstMealRouter);
+router.use("/last-meal", lastMealRouter);
+router.use("/meal-by-id", mealByIdRouter);
+router.use("/meal-by-title", mealByTitleRouter);
 
-app.listen(3000, () => console.log("Server is listening on port 3000...."));
+export default router;

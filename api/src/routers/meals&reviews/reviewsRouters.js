@@ -5,11 +5,13 @@ import knex from "../../database_client.js";
 const app = express();
 app.use(express.json());
 
-const port = process.env.PORT || 5000;
+//const port = process.env.PORT || 5000;
 
 // /api/reviews	GET	Returns all reviews.
 
-app.get("/api/reviews", async (request, response) => {
+const reviewsRouters = express.Router();
+
+reviewsRouters.get("/all-reviews", async (request, response) => {
   try {
     const reviews = await knex("review").select("*");
     if (reviews.length > 0) {
@@ -24,12 +26,16 @@ app.get("/api/reviews", async (request, response) => {
 
 // /api/meals/:meal_id/reviews	GET	Returns all reviews for a specific meal.
 
-app.get("/api/meals/:meal_id/reviews", async (request, response) => {
+reviewsRouters.get("/:meal_id/reviews", async (request, response) => {
   try {
     const { meal_id } = request.params;
     const data = await knex("review").select("*").where({ meal_id: meal_id });
+    const averageStars = await knex("review")
+      .where({ meal_id: meal_id })
+      .avg("stars as average_star")
+      .first();
     if (data.length > 0) {
-      return response.json(data);
+      return response.json(averageStars);
     }
     return response
       .status(404)
@@ -42,7 +48,7 @@ app.get("/api/meals/:meal_id/reviews", async (request, response) => {
 
 // /api/reviews	POST	Adds a new review to the database
 
-app.post("/api/reviews", async (request, response) => {
+reviewsRouters.post("/post", async (request, response) => {
   try {
     const data = request.body;
     if (!data.meal_id || !data.title || !data.stars) {
@@ -56,13 +62,15 @@ app.post("/api/reviews", async (request, response) => {
     }
   } catch (error) {
     console.log(error);
-    response.status(500).json({ Error: "Internal server error" });
+    response
+      .status(500)
+      .json({ Error: error.sqlMessage || "Internal server error" });
   }
 });
 
 // /api/reviews/:id	GET	Returns a review by id.
 
-app.get("/api/reviews/:id", async (request, response) => {
+reviewsRouters.get("/api/reviews/:id", async (request, response) => {
   try {
     const { id } = request.params;
     const review = await knex("review").select("*").where({ id: id });
@@ -80,7 +88,7 @@ app.get("/api/reviews/:id", async (request, response) => {
 
 // /api/reviews/:id	PUT	Updates the review by id.
 
-app.put("/api/reviews/:id", async (request, response) => {
+reviewsRouters.put("/api/reviews/:id", async (request, response) => {
   const { id } = request.params;
   const { title, description, meal_id, stars } = request.body;
   const existingReview = await knex("review")
@@ -101,7 +109,7 @@ app.put("/api/reviews/:id", async (request, response) => {
 
 // /api/reviews/:id	DELETE	Deletes the review by id.
 
-app.delete("/api/reviews/:id", async (request, response) => {
+reviewsRouters.delete("/api/reviews/:id", async (request, response) => {
   try {
     const { id } = request.params;
     const reviewToDelete = await knex("review").where({ id }).first();
@@ -119,4 +127,6 @@ app.delete("/api/reviews/:id", async (request, response) => {
   }
 });
 
-app.listen(port, () => console.log("Server is listening on port 5000...."));
+export default reviewsRouters;
+
+//app.listen(port, () => console.log("Server is listening on port 5000...."));

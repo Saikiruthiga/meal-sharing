@@ -1,9 +1,9 @@
 import express from "express";
 import knex from "../database_client.js";
 
-const router = express.Router();
+const mealByIdRouter = express.Router();
 
-router.get("/:id", async (request, response) => {
+mealByIdRouter.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
     const getMeal = await knex("meal").where("id", id).first();
@@ -17,4 +17,4 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-export default router;
+export default mealByIdRouter;
