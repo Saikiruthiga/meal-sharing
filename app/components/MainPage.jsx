@@ -10,22 +10,38 @@ import fetchMealByTitle from "../utils/fetchMealByTitle";
 const MainPage = () => {
   const [meals, setMeals] = useState([]);
   const [searchMeal, setSearchMeal] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const handleChange = (e) => {
     setSearchMeal(e.target.value);
   };
   const router = useRouter();
   useEffect(() => {
     const getMeals = async () => {
-      if (searchMeal) {
-        const fetchedMeals = await fetchMealByTitle(searchMeal);
-        setMeals(fetchedMeals);
-      } else {
-        const fetchedMeals = await fetchMeals();
-        setMeals(fetchedMeals.slice(0, 3));
+      try {
+        if (searchMeal) {
+          const fetchedMeal = await fetchMealByTitle(searchMeal);
+          if (Array.isArray(fetchedMeal)) {
+            setMeals(fetchedMeal);
+          } else {
+            setMeals([]);
+            // alert(
+            //   "OOPS ! no meals available with this name"
+            // );
+            setErrorMessage("OOPS! No meals available with that name");
+          }
+        } else {
+          const fetchedMeals = await fetchMeals();
+          setMeals(fetchedMeals.slice(0, 3));
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
+        setMeals([]);
       }
     };
     getMeals();
   }, [searchMeal]);
+
   const handleClick = () => {
     router.push("/meals");
   };
@@ -70,6 +86,20 @@ const MainPage = () => {
             value={searchMeal}
             onChange={handleChange}
           />
+          {errorMessage && (
+            <p
+              style={{
+                color: "darkblue",
+                padding: "10px",
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                borderRadius: "5px",
+                textAlign: "center",
+                marginTop: "10px",
+              }}
+            >
+              {errorMessage}
+            </p>
+          )}
         </Box>
       </Box>
 
