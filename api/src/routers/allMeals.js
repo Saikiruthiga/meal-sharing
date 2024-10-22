@@ -9,7 +9,9 @@ allMealsRouter.get("/", async (request, response) => {
     response.json(meals);
   } catch (error) {
     console.log("Error on fetching : " + error);
-    response.status(500).json({ Error: "Server error" });
+    response
+      .status(500)
+      .json({ Error: "Server error", details: error.message });
   }
 });
 
