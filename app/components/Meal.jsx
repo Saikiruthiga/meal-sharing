@@ -9,7 +9,7 @@ import {
   Link,
 } from "@mui/material";
 
-const Meal = ({ id, title, description, price, when, image }) => {
+const Meal = ({ id, title, description, price, image }) => {
   return (
     <Box sx={{ marginTop: "50px" }}>
       <Card sx={{ maxWidth: 345, mb: 2, bgcolor: "#1F1F1F" }}>

@@ -1,0 +1,7 @@
+{
+  "/meals/[id]/page": "app/meals/[id]/page.js",
+  "/home/page": "app/home/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/meals/page": "app/meals/page.js"
+}

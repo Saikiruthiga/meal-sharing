@@ -28,15 +28,15 @@ clone the repository: git clone https://github.com/Saikiruthiga/meal-sharing.git
 Install dependencies: npm install
 
 set up the database in mysql using docker:
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=mysql-root-password -e MYSQL_DATABASE=my-database -d -p 3306:3306 mysql:latest
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=your-root-password -e MYSQL_DATABASE=your-database-name -d -p 3306:3306 mysql:latest
 
 set the environment variables:
 DB_CLIENT=mysql2
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=mysql-root-password
-DB_DATABASE_NAME=meal-sharing
+DB_PASSWORD=your-root-password
+DB_DATABASE_NAME=your-database-name
 
 open two terminals:
 for frontend - cd app , then npm run dev
