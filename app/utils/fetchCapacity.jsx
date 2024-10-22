@@ -1,7 +1,7 @@
 const fetchCapacity = async (id) => {
   try {
     const response = await fetch(
-      "http://localhost:3001/api/meals/meal-by-title/?availableReservations=true"
+      `http://localhost:3001/api/meals/meal-by-title/?availableReservations=true`
     );
     const data = await response.json();
     const meal = data.find((item) => Number(item.id) === Number(id));
