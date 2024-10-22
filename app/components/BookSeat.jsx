@@ -76,7 +76,7 @@ const BookSeat = ({ id }) => {
       const postData = async () => {
         try {
           const response = await fetch(
-            "http://localhost:3001/api/reservations/post",
+            `http://localhost:3001/api/reservations/post`,
             {
               method: "post",
               headers: {
