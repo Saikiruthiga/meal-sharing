@@ -24,9 +24,6 @@ const MainPage = () => {
             setMeals(fetchedMeal);
           } else {
             setMeals([]);
-            // alert(
-            //   "OOPS ! no meals available with this name"
-            // );
             setErrorMessage("OOPS! No meals available with that name");
           }
         } else {

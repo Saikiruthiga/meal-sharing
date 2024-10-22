@@ -19,17 +19,6 @@ import SubmitReview from "../../components/SubmitReview";
 import fetchCapacity from "../../utils/fetchCapacity";
 
 const MealById = () => {
-  const images = [
-    { name: "Smorbrod", url: "/smorbrod.jpg" },
-    { name: "Paella", url: "/paella.jpg" },
-    { name: "Sushi", url: "/sushi.jpg" },
-    { name: "Hamburger", url: "/hamburger.jpg" },
-    { name: "Pad Thai", url: "/pad_thai.jpg" },
-    { name: "Tagine", url: "/tagine.jpg" },
-    { name: "Biryani", url: "/biryani.jpg" },
-    { name: "Ceviche", url: "/ceviche.jpg" },
-    { name: "Pasta Carbonara", url: "/pasta.jpg" },
-  ];
   const { id } = useParams();
   const [meal, setMeal] = useState(null);
   const [stars, setStars] = useState(0);
@@ -74,7 +63,6 @@ const MealById = () => {
     return <Typography>Loading meal details...</Typography>;
   }
 
-  const mealImage = images.find((image) => image.name === meal.title);
   return (
     <>
       <Box
@@ -122,7 +110,7 @@ const MealById = () => {
               title={meal.title}
               description={meal.description}
               price={meal.price}
-              image={mealImage.url}
+              image={meal.image_url}
             />
           </Box>
           <Box sx={{ marginTop: "60px", marginLeft: "40%" }}>

@@ -28,7 +28,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="h6" sx={{ color: "#fff" }}>
-            Join us at any time !{" "}
+            Join us at any time !
           </Typography>
           <Typography sx={{ color: "#bdbdbd" }}>
             Subscribe to our newsletter

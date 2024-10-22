@@ -127,7 +127,7 @@ const BookSeat = ({ id }) => {
       clearFormState();
       setForm(true);
     } else {
-      alert("OOPS ! No spots available");
+      return;
     }
   };
 
