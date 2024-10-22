@@ -4,9 +4,11 @@ const fetchMealByTitle = async (title) => {
       `http://localhost:3001/api/meals/meal-by-title/?title=${title}`
     );
     const result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {
     console.log(" Error on fetching : ", error);
+    return [];
   }
 };
 export default fetchMealByTitle;
