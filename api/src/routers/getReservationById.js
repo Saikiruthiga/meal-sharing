@@ -9,11 +9,9 @@ router.get("/:id", async (request, response) => {
       .where({ id: reservationId })
       .first();
     if (!reservation) {
-      return response
-        .status(404)
-        .json({
-          Error: `No matching reservation found for this id ${reservationId}`,
-        });
+      return response.status(404).json({
+        Error: `No matching reservation found for this id ${reservationId}`,
+      });
     }
     response.json({ reservation });
   } catch (error) {

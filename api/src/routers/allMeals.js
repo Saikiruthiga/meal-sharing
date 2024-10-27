@@ -8,6 +8,7 @@ allMealsRouter.get("/", async (request, response) => {
     const meals = await knex("meal").select("*");
     response.json(meals);
   } catch (error) {
+    console.trace();
     console.log("Error on fetching : " + error);
     response
       .status(500)
