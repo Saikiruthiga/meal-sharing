@@ -1,7 +1,7 @@
 const sortMeals = async (sortKey, sortDir) => {
   try {
     const response = await fetch(
-      `http://localhost:3001/api/meals/meal-by-title/?sortKey=${sortKey}&sortDir=${sortDir}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/meals/meal-by-title/?sortKey=${sortKey}&sortDir=${sortDir}`
     );
     const result = await response.json();
     console.log(result);

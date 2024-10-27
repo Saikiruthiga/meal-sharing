@@ -46,13 +46,16 @@ const SubmitReview = ({ id }) => {
     e.preventDefault();
     const postReview = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/reviews/post", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const response = await fetch(
+          "${process.env.NEXT_PUBLIC_API_URL}/api/reviews/post",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
         if (response.ok) {
           const result = await response.json();
           setModal({

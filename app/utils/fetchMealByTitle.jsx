@@ -1,7 +1,7 @@
 const fetchMealByTitle = async (title) => {
   try {
     const response = await fetch(
-      `http://localhost:3001/api/meals/meal-by-title/?title=${title}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/meals/meal-by-title/?title=${title}`
     );
     const result = await response.json();
     console.log(result);

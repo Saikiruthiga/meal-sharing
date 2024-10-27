@@ -43,7 +43,7 @@ const MealById = () => {
           const fetchedMeal = await fetchMealById(id);
           setMeal(fetchedMeal);
           const reviewResponse = await fetch(
-            `http://localhost:3001/api/reviews/${id}/reviews`
+            `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/${id}/reviews`
           );
           const review = await reviewResponse.json();
           if (review && review.average_star !== undefined) {
