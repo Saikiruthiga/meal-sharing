@@ -47,7 +47,7 @@ const SubmitReview = ({ id }) => {
     const postReview = async () => {
       try {
         const response = await fetch(
-          "${process.env.NEXT_PUBLIC_API_URL}/api/reviews/post",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/reviews/post`,
           {
             method: "POST",
             headers: {
