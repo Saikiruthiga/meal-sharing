@@ -63,6 +63,8 @@ const SubmitReview = ({ id }) => {
             type: "Success",
           });
         } else {
+          const errorResult = await response.json();
+          console.log(errorResult);
           setModal({ message: "Failed to submit the review", type: "Error" });
         }
         setOpen(true);
