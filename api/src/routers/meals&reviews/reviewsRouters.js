@@ -51,7 +51,7 @@ reviewsRouters.get("/:meal_id/reviews", async (request, response) => {
 reviewsRouters.post("/post", async (request, response) => {
   try {
     const data = request.body;
-    console.log(`Received Data : ${data}`);
+    console.log("Received Data :" + JSON.stringify(data));
     if (!data.meal_id || !data.title || !data.stars) {
       return response.status(400).json({
         Error: "Invalid request, provide meal_id,title and stars for reviews",
