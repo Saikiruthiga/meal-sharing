@@ -51,11 +51,13 @@ reviewsRouters.get("/:meal_id/reviews", async (request, response) => {
 reviewsRouters.post("/post", async (request, response) => {
   try {
     const data = request.body;
+    console.log(`Received Data : ${data}`);
     if (!data.meal_id || !data.title || !data.stars) {
       return response.status(400).json({
         Error: "Invalid request, provide meal_id,title and stars for reviews",
       });
     } else {
+      console.log("Data to be inserted:", data);
       const [insertedId] = await knex("review").insert(data);
       const review = await knex("review").select("*").where({ id: insertedId });
       response.json({ "Inserted record": review });
