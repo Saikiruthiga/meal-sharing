@@ -8,8 +8,15 @@ import Footer from "../components/Footbar";
 import fetchMealByTitle from "../utils/fetchMealByTitle";
 
 const MainPage = () => {
-  const [meals, setMeals] = useState([]);
+  const [meals, setMeals] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedMeals = localStorage.getItem("meals");
+      return storedMeals ? JSON.parse(storedMeals) : [];
+    }
+    return [];
+  });
   const [searchMeal, setSearchMeal] = useState("");
+
   const handleChange = (e) => {
     setSearchMeal(e.target.value);
   };
@@ -17,11 +24,21 @@ const MainPage = () => {
   useEffect(() => {
     const getMeals = async () => {
       if (searchMeal) {
-        const fetchedMeals = await fetchMealByTitle(searchMeal);
-        setMeals(fetchedMeals);
+        const fetchedMeal = await fetchMealByTitle(searchMeal);
+        setMeals(fetchedMeal);
       } else {
-        const fetchedMeals = await fetchMeals();
-        setMeals(fetchedMeals.slice(0, 3));
+        if (meals.length === 0) {
+          try {
+            const fetchedMeals = await fetchMeals();
+            const slicedMeals = fetchedMeals.slice(0, 3);
+            setMeals(slicedMeals);
+            if (typeof window !== "undefined") {
+              localStorage.setItem("meals", JSON.stringify(slicedMeals));
+            }
+          } catch (error) {
+            console.error("Error fetching meals:", error);
+          }
+        }
       }
     };
     getMeals();
